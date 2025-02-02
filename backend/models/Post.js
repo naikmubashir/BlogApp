@@ -12,11 +12,11 @@ const postSchema = new mongoose.Schema({
     required: [true, 'Please add content'],
     maxlength: [5000, 'Content cannot exceed 5000 characters']
   },
-  postedBy: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
-  }
+  // postedBy: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'User',
+  //   required: true
+  // }
 }, { timestamps: true });
 
 export default mongoose.model('Post', postSchema);
