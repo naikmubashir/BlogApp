@@ -39,6 +39,7 @@ export const loginUser= async(req,res)=>{
             return res.status(400).json({error:"Invalid email or password"})
         }
         generateTokenAndSetCookie(user._id,res);
+        console.log('helooooooooo')
         res.status(200).json({_id:user._id, name:user.name, email:user.email});  
         
     }catch(err){

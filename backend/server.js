@@ -4,6 +4,7 @@ import cors from 'cors';
 import connectDB from './config/db.js';
 import postRoutes from './routes/postsRoute.js';
 import userRoutes from './routes/usersRoute.js';
+import checkIfLoggedInRoute from './routes/checkIfLoggedInRoute.js';
 // import errorHandler from './middleware/errorHandler.js';
 import cookieParser from 'cookie-parser';
 
@@ -13,11 +14,15 @@ const app = express();
 // Middleware
 app.use(express.json());
 app.use(cookieParser());
-//app.use(cors());
-
+// app.use(cors());
+app.use(cors({
+  origin: "http://localhost:5173", // Replace with your frontend URL
+  credentials: true, // Allow cookies
+}));
 // Routes
 app.use('/api/posts', postRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/isLoggedIn', checkIfLoggedInRoute);
 
 // Error handling
 // app.use(errorHandler);
