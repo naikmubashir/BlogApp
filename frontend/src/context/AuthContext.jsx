@@ -4,7 +4,7 @@ import { isLoggedIn } from '../services/api'; // Import your API function to che
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState();
 
   useEffect(() => {
     checkLoggedIn(); // Check if the user is logged in when the component is mounted

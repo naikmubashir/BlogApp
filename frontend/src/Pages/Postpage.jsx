@@ -1,18 +1,21 @@
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { getPost, deletePost } from '../services/api';
+import { useParams, useNavigate, Link } from 'react-router-dom';
+import { getPost,updatePost, deletePost } from '../services/api';
+import { useAuth } from '../context/AuthContext';
+import Navbar from '../components/Navbar';
 
 export default function Post() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated]=useAuth();
 
   useEffect(() => {
     const fetchPost = async () => {
       try {
         const { data } = await getPost(id);
-        setPost(data);
+        setPost(data.post);
       } catch (error) {
         console.error(error);
       } finally {
@@ -24,8 +27,10 @@ export default function Post() {
 
   const handleDelete = async () => {
     try {
-      await deletePost(id);
-      navigate('/');
+      if(isAuthenticated){
+        await deletePost(id);
+        navigate('/');
+      }
     } catch (error) {
       console.error(error);
     }
@@ -35,6 +40,7 @@ export default function Post() {
   if (!post) return <p>Post not found</p>;
 
   return (
+    <><Navbar/>
     <div className="container">
       <article className="card shadow">
         <div className="card-body">
@@ -47,8 +53,8 @@ export default function Post() {
               >
                 Delete
               </button>
-              <Link 
-                to={`/edit/${post._id}`}
+              <Link
+                to={`/posts/edit/${post._id}`}
                 className="btn btn-secondary btn-sm"
               >
                 Edit
@@ -65,5 +71,6 @@ export default function Post() {
         </div>
       </article>
     </div>
+    </>
   );
 }

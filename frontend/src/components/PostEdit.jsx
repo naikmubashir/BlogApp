@@ -1,18 +1,19 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { createPost } from '../services/api';
+import { useNavigate, useParams } from 'react-router-dom';
+import { updatePost } from '../services/api';
 
-export default function PostForm() {
+export default function PostEdit({title, content }) {
+    const {id}= useParams();
     const [formData, setFormData] = useState({
-        title: '',
-        content: ''
+        title: title,
+        content: content
     });
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await createPost(formData);
+            await updatePost(id, formData);
             navigate('/');
         } catch (error) {
             console.error(error);
@@ -25,7 +26,7 @@ export default function PostForm() {
                 <div className="col-md-8">
                     <div className="card">
                         <div className="card-header">
-                            <h3>Create a New Post</h3>
+                            <h3>Edit Post</h3>
                         </div>
                         <div className="card-body">
                             <form onSubmit={handleSubmit}>
@@ -51,7 +52,7 @@ export default function PostForm() {
                                         required
                                     ></textarea>
                                 </div>
-                                <button type="submit" className="btn btn-primary w-100">Submit</button>
+                                <button type="submit" className="btn btn-primary w-100">Update</button>
                             </form>
                         </div>
                     </div>
