@@ -9,7 +9,7 @@ export default function BlogList() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = await axios.get('http://localhost:8001/api/posts');
+        const res = await axios.get('https://blogapp-74eo.onrender.com/api/posts');
         console.log(res)
         setPosts(res.data);
       } catch (err) {
